@@ -24,17 +24,23 @@ def load_image(name, color_key=None):
 class Food():
     # image = load_image('penguin\Idle\Armature_IDLE_00.png',-1)
     def __init__(self):
-        self.screen = 'pass'
-        self.fd = pygame.sprite.Group()
+        # self.screen = 'pass'
+        # self.fd = pygame.sprite.Group()
 
-        self.sprite = pygame.sprite.Sprite()
-        self.sprite.image = Food.image
-        self.sprite.rect = self.sprite.image.get_rect()
-        self.fd.add(self.sprite)
+        # self.sprite = pygame.sprite.Sprite()
+        # self.sprite.image = Food.image
+        # self.sprite.rect = self.sprite.image.get_rect()
+        # self.fd.add(self.sprite)
+        pass
 
     def spawning(self):
         type = randrange(1,4)
         print(type)
+
+
+fd = Food()
+
+fd.spawning()
 
 
 
