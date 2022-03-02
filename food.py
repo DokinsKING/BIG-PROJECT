@@ -31,32 +31,67 @@ class Food():
         # self.sprite.image = Food.image
         # self.sprite.rect = self.sprite.image.get_rect()
         # self.fd.add(self.sprite)
-        pass
+        self.mx = []
 
     def spawning(self):
-        type = randrange(1,4)
-        print(type)
+        if len(self.mx) <= 6:
+            type = randrange(1,4)
+            if type == 1:
+                self.mx.append(['r',randrange(300,801),1000,randrange(350,400),True])
+            elif type == 2:
+                self.mx.append(['c',randrange(300,801),1000,randrange(350,400),True])
+            elif type == 3:
+                self.mx.append(['c',randrange(300,801),1000,randrange(350,400),True])
+        for n in range(len(self.mx)):
+            try:
+                if self.mx[n][0] == 'r':
+                    if self.mx[n][4] == True:
+                        self.mx[n][2] -= 3
+                        if self.mx[n][2] < self.mx[n][3]:
+                            self.mx[n][4] = False
+                    elif self.mx[n][4] == False:
+                        self.mx[n][4] = False
+                        self.mx[n][2] += 4
+                        if self.mx[n][2] > 1000:
+                            del self.mx[n]
+                    pygame.draw.rect(screen,'red',(self.mx[n][1],self.mx[n][2],40,40))
+                if self.mx[n][0] == 'c':
+                    if self.mx[n][4] == True:
+                        self.mx[n][2] -= 3
+                        if self.mx[n][2] < self.mx[n][3]:
+                            self.mx[n][4] = False
+                    elif self.mx[n][4] == False:
+                        self.mx[n][4] = False
+                        self.mx[n][2] += 4
+                        if self.mx[n][2] > 1000:
+                            del self.mx[n]
+                    pygame.draw.circle(screen,'yellow',(self.mx[n][1],self.mx[n][2]),20)
+            except IndexError:
+                pass
+
 
 
 fd = Food()
-
-fd.spawning()
 
 
 
 if __name__ == '__main__':
     pygame.init()
-    size = width,height = 501,501
+    size = width,height = 1080,900
     screen = pygame.display.set_mode(size)
     running = True
     pygame.display.flip()
+    clock = pygame.time.Clock()
+    FPS = 120
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                board.get_click(event.pos)
-        screen.fill((0,0,0))
+
+
+        screen.fill('black')
+        fd.spawning()
         pygame.display.flip()
+        clock.tick(FPS)
     pygame.quit()
