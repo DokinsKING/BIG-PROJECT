@@ -33,42 +33,55 @@ class Food():
         # self.fd.add(self.sprite)
         self.mx = []
 
-    def spawning(self):
+    def new_object(self):
         if len(self.mx) <= 6:
             type = randrange(1,4)
             if type == 1:
-                self.mx.append(['r',randrange(300,801),1000,randrange(350,400),True])
+                b = False
+                f1r = randrange(300,801)
+                f2r = randrange(350,400)
+                for n in range(len(self.mx)):
+                    if f1r < self.mx[n][1] + 40 and f1r > self.mx[n][1] - 40:
+                        b = True
+                if not b:
+                    self.mx.append(['r',f1r,1000,f2r,10])
             elif type == 2:
-                self.mx.append(['c',randrange(300,801),1000,randrange(350,400),True])
-            elif type == 3:
-                self.mx.append(['c',randrange(300,801),1000,randrange(350,400),True])
+                b = False
+                f1r = randrange(300,801)
+                f2r = randrange(350,400)
+                for n in range(len(self.mx)):
+                    if f1r < self.mx[n][1] + 40 and f1r > self.mx[n][1] - 40:
+                        b = True
+                if not b:
+                    self.mx.append(['c',f1r,1000,f2r,10])
+            # elif type == 3:
+            #     b = False
+            #     f1r = randrange(300,801)
+            #     f2r = randrange(350,400)
+            #     for n in range(len(self.mx)):
+            #         if f1r < self.mx[n][1] + 40 and f1r > self.mx[n][1] - 40:
+            #             b = True
+            #     if not b:
+            #         self.mx.append(['c',f1r,1000,f2r,10])
+    def spawning(self):
         for n in range(len(self.mx)):
             try:
                 if self.mx[n][0] == 'r':
-                    if self.mx[n][4] == True:
-                        self.mx[n][2] -= 3
-                        if self.mx[n][2] < self.mx[n][3]:
-                            self.mx[n][4] = False
-                    elif self.mx[n][4] == False:
-                        self.mx[n][4] = False
-                        self.mx[n][2] += 4
-                        if self.mx[n][2] > 1000:
-                            del self.mx[n]
+                    self.mx[n][2] -= self.mx[n][4]
+                    if self.mx[n][2] < self.mx[n][3] + 100:
+                        self.mx[n][4] -= 0.5
+                    if self.mx[n][2] > 1000:
+                        del self.mx[n]
                     pygame.draw.rect(screen,'red',(self.mx[n][1],self.mx[n][2],40,40))
                 if self.mx[n][0] == 'c':
-                    if self.mx[n][4] == True:
-                        self.mx[n][2] -= 3
-                        if self.mx[n][2] < self.mx[n][3]:
-                            self.mx[n][4] = False
-                    elif self.mx[n][4] == False:
-                        self.mx[n][4] = False
-                        self.mx[n][2] += 4
-                        if self.mx[n][2] > 1000:
-                            del self.mx[n]
+                    self.mx[n][2] -= self.mx[n][4]
+                    if self.mx[n][2] < self.mx[n][3] + 100:
+                        self.mx[n][4] -= 0.5
+                    if self.mx[n][2] > 1000:
+                        del self.mx[n]
                     pygame.draw.circle(screen,'yellow',(self.mx[n][1],self.mx[n][2]),20)
             except IndexError:
                 pass
-
 
 
 fd = Food()
@@ -82,7 +95,7 @@ if __name__ == '__main__':
     running = True
     pygame.display.flip()
     clock = pygame.time.Clock()
-    FPS = 120
+    FPS = 60
 
     while running:
         for event in pygame.event.get():
@@ -91,6 +104,7 @@ if __name__ == '__main__':
 
 
         screen.fill('black')
+        fd.new_object()
         fd.spawning()
         pygame.display.flip()
         clock.tick(FPS)
