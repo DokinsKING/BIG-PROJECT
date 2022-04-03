@@ -53,6 +53,7 @@ class Food():
                     self.variables[name].image = Food.apple
                     self.variables[name].rect = self.variables[name].image.get_rect()
                     self.variables[name].mask = pygame.mask.from_surface(self.variables[name].image)
+                    self.variables[name].name = name
                     self.variables[name].rect.x = f1r
                     self.variables[name].rect.y = 1000
                     self.mx.append(['a',f2r,10,rside,name])
@@ -73,6 +74,7 @@ class Food():
                     self.variables[name].image = Food.pear
                     self.variables[name].rect = self.variables[name].image.get_rect()
                     self.variables[name].mask = pygame.mask.from_surface(self.variables[name].image)
+                    self.variables[name].name = name
                     self.variables[name].rect.x = f1r
                     self.variables[name].rect.y = 1000
                     self.mx.append(['p',f2r,10,rside,name])
@@ -94,7 +96,7 @@ class Food():
                 if self.mx[n][0] == 'a':
                     #смотрю какое имя у этого спрайта
                     name = self.mx[n][4]
-                    #работа с координатами спрйта
+                    #работа с координатами спрайта
                     self.variables[name].rect.y -= self.mx[n][2]
                     self.variables[name].rect.x += self.mx[n][3]
                     #это типо гравитация и чем выше тем медленнне литит спрайт, потом уже вниз
@@ -103,6 +105,7 @@ class Food():
                     #когда спрайт улетит вниз, то удалится
                     if self.variables[name].rect.y > 1000:
                         self.variables[name].kill()
+                        del self.variables[name]
                         del self.mx[n]
                     self.fd.draw(self.screen)
                 #тоже самое что и сверху
@@ -118,6 +121,8 @@ class Food():
                         del self.mx[n]
                     self.fd.draw(self.screen)
             except IndexError:
+                pass
+            except KeyError:
                 pass
 
 

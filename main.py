@@ -29,6 +29,10 @@ if __name__ == '__main__':
         #при сталкновении начинатеся реакция
         for m in fd.fd:
             if pygame.sprite.collide_mask(sw.sprite, m):
+                for index, item in enumerate(fd.variables):
+                    if str(item) == m.name:
+                        del fd.mx[index]
+                del fd.variables[str(m.name)]
                 m.kill()
 
 
