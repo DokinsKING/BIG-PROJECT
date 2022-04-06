@@ -13,12 +13,14 @@ from laser_tracker import LaserTracker
  
 if __name__ == '__main__':
     #инициализация pygame
+    pygame.mixer.init()
     pygame.init()
     size = width,height = 1080,900
     screen = pygame.display.set_mode(size)
     running = True
     clock = pygame.time.Clock()
     FPS = 60
+    pygame.mixer.music.load('samples\sound\poof.mp3')
     #выключил отображение мыши
     pygame.mouse.set_visible(False)
 
@@ -27,8 +29,6 @@ if __name__ == '__main__':
 
     #инициализация laser_tracker
     laser = LaserTracker()
-
-
 
 
     while running:
@@ -44,6 +44,7 @@ if __name__ == '__main__':
                         del fd.mx[index]
                 del fd.variables[str(m.name)]
                 m.kill()
+                pygame.mixer.music.play()
 
 
         screen.fill('black')
