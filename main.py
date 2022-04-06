@@ -14,7 +14,7 @@ from laser_tracker import LaserTracker
 if __name__ == '__main__':
     #инициализация pygame
     pygame.init()
-    size = width,height = 1080,900
+    size = width,height = 2000,700
     screen = pygame.display.set_mode(size)
     running = True
     clock = pygame.time.Clock()
