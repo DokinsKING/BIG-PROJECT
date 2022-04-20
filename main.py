@@ -15,17 +15,17 @@ if __name__ == '__main__':
     #инициализация pygame
     pygame.mixer.init()
     pygame.init()
-    size = width,height = 1080,900
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     running = True
     clock = pygame.time.Clock()
-    FPS = 60
+    FPS = 40
     pygame.mixer.music.load('samples\sound\poof.mp3')
     #выключил отображение мыши
     pygame.mouse.set_visible(False)
 
     sw = Sword(screen)
     fd = Food(screen)
+    
 
     #инициализация laser_tracker
     laser = LaserTracker()
@@ -46,9 +46,13 @@ if __name__ == '__main__':
                 m.kill()
                 pygame.mixer.music.play()
 
-
+        size = screen.get_size()
         screen.fill('black')
-        sw.sword_positions(laser.cycle_laser())
+        pygame.draw.circle(screen,'white',(13,13),10)
+        pygame.draw.circle(screen,'purple',(size[0] - 13,13),10)
+        pygame.draw.circle(screen,'blue',(13,size[1] - 13),10)
+        pygame.draw.circle(screen,'pink',(size[0] - 13,size[1] - 13),10)
+        # sw.sword_positions(laser.cycle_laser())
         fd.new_object()
         fd.spawning()
         pygame.display.flip()
