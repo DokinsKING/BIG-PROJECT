@@ -1,4 +1,5 @@
 import pygame
+import cv2
 import os
 from random import randrange, choice
 import sys
@@ -20,12 +21,16 @@ if __name__ == '__main__':
     size = screen.get_size()
     clock = pygame.time.Clock()
     FPS = 60
+    score = 0
     pygame.mixer.music.load('samples\sound\poof.mp3')
     #выключил отображение мыши
     pygame.mouse.set_visible(False)
 
     sw = Sword(screen)
     fd = Food(screen,size)
+    
+    f = pygame.font.Font(None, 36)
+
     
 
     #инициализация laser_tracker
@@ -39,6 +44,14 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
+
+        if score == 1:
+            score_t = f.render(f'Вы лопнули {score} фрукт',True,'white')
+        elif 2 <= score <= 4:
+            score_t = f.render(f'Вы лопнули {score} фрукта',True,'white')
+        else:
+            score_t = f.render(f'Вы лопнули {score} фруктов',True,'white')
+
         #при сталкновении начинатеся реакция
         for m in fd.fd:
             if pygame.sprite.collide_mask(sw.sprite, m):
@@ -48,13 +61,19 @@ if __name__ == '__main__':
                 del fd.variables[str(m.name)]
                 m.kill()
                 pygame.mixer.music.play()
+                score += 1
 
         screen.fill('black')
+        screen.blit(score_t, (100,100))
         pygame.draw.circle(screen,'white',(13,13),10)
         pygame.draw.circle(screen,'purple',(size[0] - 13,13),10)
         pygame.draw.circle(screen,'blue',(13,size[1] - 13),10)
         pygame.draw.circle(screen,'pink',(size[0] - 13,size[1] - 13),10)
-        # sw.sword_positions(laser.cycle_laser())
+
+
+        sw.sword_positions((laser.cycle_laser()))
+
+
         fd.new_object()
         fd.spawning()
         pygame.display.flip()
