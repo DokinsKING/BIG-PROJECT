@@ -31,8 +31,6 @@ if __name__ == '__main__':
     
     f = pygame.font.Font(None, 36)
 
-    
-
     #инициализация laser_tracker
     laser = LaserTracker()
 
@@ -70,8 +68,8 @@ if __name__ == '__main__':
         pygame.draw.circle(screen,'blue',(13,size[1] - 13),10)
         pygame.draw.circle(screen,'pink',(size[0] - 13,size[1] - 13),10)
 
-
-        sw.sword_positions((laser.cycle_laser()))
+g
+        sw.sword_positions(laser.cycle_laser())
 
 
         fd.new_object()

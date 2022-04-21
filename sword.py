@@ -33,3 +33,4 @@ class Sword():
             self.sprite.rect.x = coord[0] - self.sprite.image.get_rect()[2]/2
             self.sprite.rect.y = coord[1] - self.sprite.image.get_rect()[3]/2
             self.sw.draw(self.screen)
+
