@@ -17,14 +17,15 @@ if __name__ == '__main__':
     pygame.init()
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     running = True
+    size = screen.get_size()
     clock = pygame.time.Clock()
-    FPS = 40
+    FPS = 60
     pygame.mixer.music.load('samples\sound\poof.mp3')
     #выключил отображение мыши
     pygame.mouse.set_visible(False)
 
     sw = Sword(screen)
-    fd = Food(screen)
+    fd = Food(screen,size)
     
 
     #инициализация laser_tracker
@@ -35,7 +36,9 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
         #при сталкновении начинатеся реакция
         for m in fd.fd:
             if pygame.sprite.collide_mask(sw.sprite, m):
@@ -46,7 +49,6 @@ if __name__ == '__main__':
                 m.kill()
                 pygame.mixer.music.play()
 
-        size = screen.get_size()
         screen.fill('black')
         pygame.draw.circle(screen,'white',(13,13),10)
         pygame.draw.circle(screen,'purple',(size[0] - 13,13),10)

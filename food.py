@@ -20,11 +20,13 @@ class Food():
     apple = pygame.transform.scale(load_image('foods\\red_apple.png'), (80,80))
     pear = pygame.transform.scale(load_image('foods\\pear.png'), (80,80))
     
-    def __init__(self,screen):
+    def __init__(self,screen,size):
         #получил скрин
         self.screen = screen
         #создал группу для спрайтов
         self.fd = pygame.sprite.Group()
+
+        self.size = size
         
         #создал словарь, чтобы генерировать имена спрайтов
         self.variables = {}
@@ -32,15 +34,15 @@ class Food():
         self.mx = []
 
     def new_object(self):
-        if len(self.mx) <= 6:
+        if len(self.mx) <= 10:
             #рандомно выбираю какая еда заспавнится
             type = randrange(1,4)
             #смотря какой тип будет появлятся еда
             if type == 1:
                 #рандомно выбираю координату x
-                f1r = randrange(300,801)
+                f1r = randrange(500,self.size[0] - 500)
                 #рандомно выбираю максимальное высоту, на которую поднимится еда
-                f2r = randrange(350,400)
+                f2r = randrange(self.size[1]/3,self.size[1]/2)
                 #рандомно выбираю в какую сторону полетит еда
                 rside = choice([-1.5,1.5,0])
                 #создаю рандомное имя для спрайта
@@ -55,13 +57,13 @@ class Food():
                     self.variables[name].mask = pygame.mask.from_surface(self.variables[name].image)
                     self.variables[name].name = name
                     self.variables[name].rect.x = f1r
-                    self.variables[name].rect.y = 1000
+                    self.variables[name].rect.y = self.size[1] + 200
                     self.mx.append(['a',f2r,10,rside,name])
                     self.fd.add(self.variables[name])
             #тут тоже самое, что и с типом 1
             elif type == 2:
-                f1r = randrange(300,801)
-                f2r = randrange(350,400)
+                f1r = randrange(500,self.size[0] - 500)
+                f2r = randrange(self.size[1]/3,self.size[1]/2)
                 rside = choice([-1.5,1.5,0])
                 num1 = randrange(1,150)
                 name = f'pear{num1}'
@@ -76,7 +78,7 @@ class Food():
                     self.variables[name].mask = pygame.mask.from_surface(self.variables[name].image)
                     self.variables[name].name = name
                     self.variables[name].rect.x = f1r
-                    self.variables[name].rect.y = 1000
+                    self.variables[name].rect.y = self.size[1] + 200
                     self.mx.append(['p',f2r,10,rside,name])
                     self.fd.add(self.variables[name])
             # elif type == 3:
@@ -103,7 +105,7 @@ class Food():
                     if self.variables[name].rect.y < self.mx[n][1] + 100:
                         self.mx[n][2] -= 0.5
                     #когда спрайт улетит вниз, то удалится
-                    if self.variables[name].rect.y > 1000:
+                    if self.variables[name].rect.y > self.size[1] + 200:
                         self.variables[name].kill()
                         del self.variables[name]
                         del self.mx[n]
@@ -115,7 +117,7 @@ class Food():
                     self.variables[name].rect.x += self.mx[n][3]
                     if self.variables[name].rect.y < self.mx[n][1] + 100:
                         self.mx[n][2] -= 0.5
-                    if self.variables[name].rect.y > 1000:
+                    if self.variables[name].rect.y > self.size[1] + 200:
                         self.variables[name].kill()
                         del self.variables[name]
                         del self.mx[n]
