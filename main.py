@@ -22,7 +22,7 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     FPS = 60
     score = 0
-    pygame.mixer.music.load('samples\sound\poof.mp3')
+    poof = pygame.mixer.Sound('samples\sound\poof.mp3')
     #выключил отображение мыши
     pygame.mouse.set_visible(False)
 
@@ -58,7 +58,7 @@ if __name__ == '__main__':
                         del fd.mx[index]
                 del fd.variables[str(m.name)]
                 m.kill()
-                pygame.mixer.music.play()
+                poof.play()
                 score += 1
 
         screen.fill('black')
@@ -69,7 +69,7 @@ if __name__ == '__main__':
         pygame.draw.circle(screen,'pink',(size[0] - 13,size[1] - 13),10)
 
 
-        sw.sword_positions(laser.cycle_laser())
+        sw.sword_positions(['Привет'])
 
 
         fd.new_object()
