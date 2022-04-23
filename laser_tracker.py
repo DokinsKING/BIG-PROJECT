@@ -43,23 +43,38 @@ class LaserTracker:
         res_white = cv2.inRange(hsv, min_white, max_white)
 
         min_blue = ((90, 68, 70))
-        max_blue = ((137, 255, 155))
+        max_blue = ((137, 255, 255))
         res_blue = cv2.inRange(hsv, min_blue, max_blue)
 
         cv2.imshow('wrg', res_blue)
+        cv2.imshow('cam', img)
 
         moments_white = cv2.moments(res_white, 1)
         dm01_white = moments_white['m01']
         dm10_white = moments_white['m10']
         dArea_white = moments_white['m00']
 
+        moments_blue = cv2.moments(res_blue, 1)
+        dm01_blue = moments_blue['m01']
+        dm10_blue = moments_blue['m10']
+        dArea_blue = moments_blue['m00']
+        
 
-        if dArea_white > 20:
+      
+        if dArea_white > 40:
             x_white = int(dm10_white/dArea_white)
             y_white = int(dm01_white/dArea_white)
-            return (x_white, y_white)
 
-        return (0, 0)
+        if dArea_blue > 30:
+            x_blue = int(dm10_blue/dArea_blue)
+            y_blue = int(dm01_blue/dArea_blue)
+            return([x_blue, y_blue])
+        else: return([0, 0])
+
+
+            
+
+        
 
     
     def cameraoff(self):

@@ -17,8 +17,8 @@ def load_image(name, color_key=None):
 
 class Food():
     #загружаем изображение еды
-    apple = pygame.transform.scale(load_image('foods\\red_apple.png'), (80,80))
-    pear = pygame.transform.scale(load_image('foods\\pear.png'), (80,80))
+    apple = pygame.transform.scale(load_image('foods//red_apple.png'), (80,80))
+    pear = pygame.transform.scale(load_image('foods//pear.png'), (80,80))
     
     def __init__(self,screen,size):
         #получил скрин
