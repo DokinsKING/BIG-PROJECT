@@ -69,7 +69,7 @@ if __name__ == '__main__':
         pygame.draw.circle(screen,'pink',(size[0] - 13,size[1] - 13),10)
 
 
-        sw.sword_positions(['Привет'])
+        sw.sword_positions(laser.cycle_laser())
 
 
         fd.new_object()
