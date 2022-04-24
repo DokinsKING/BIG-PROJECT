@@ -22,7 +22,7 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     FPS = 60
     score = 0
-    poof = pygame.mixer.Sound('samples\sound\poof.mp3')
+    poof = pygame.mixer.Sound('samples/sound/poof.mp3')
     #выключил отображение мыши
     pygame.mouse.set_visible(False)
 
@@ -43,12 +43,12 @@ if __name__ == '__main__':
                 if event.key == pygame.K_ESCAPE:
                     running = False
 
-        if score == 1:
-            score_t = f.render(f'Вы лопнули {score} фрукт',True,'white')
-        elif 2 <= score <= 4:
-            score_t = f.render(f'Вы лопнули {score} фрукта',True,'white')
-        else:
-            score_t = f.render(f'Вы лопнули {score} фруктов',True,'white')
+        # if score == 1:
+        #     score_t = f.render(f'Вы лопнули {score} фрукт',True,'white')
+        # elif 2 <= score <= 4:
+        #     score_t = f.render(f'Вы лопнули {score} фрукта',True,'white')
+        # else:
+        #     score_t = f.render(f'Вы лопнули {score} фруктов',True,'white')
 
         #при сталкновении начинатеся реакция
         for m in fd.fd:
@@ -61,15 +61,21 @@ if __name__ == '__main__':
                 poof.play()
                 score += 1
 
+        blue_circle = laser.tracking_cycle()
+        
+        
         screen.fill('black')
-        screen.blit(score_t, (100,100))
-        pygame.draw.circle(screen,'white',(13,13),10)
-        pygame.draw.circle(screen,'purple',(size[0] - 13,13),10)
-        pygame.draw.circle(screen,'blue',(13,size[1] - 13),10)
+        # screen.blit(score_t, (100,100))
+        # pygame.draw.circle(screen, (255, 255, 255),(13,13),30)
+        # pygame.draw.circle(screen,'purple',(size[0] - 13,13),10)
+        pygame.draw.circle(screen,'blue',(35,size[1] - 35),50)
         pygame.draw.circle(screen,'pink',(size[0] - 13,size[1] - 13),10)
+        
+
 
 
         sw.sword_positions(laser.cycle_laser())
+        print(blue_circle[0]-35, blue_circle[1]-(size[1] - 35))
 
 
         fd.new_object()
