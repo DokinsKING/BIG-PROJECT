@@ -49,6 +49,7 @@ class Food():
                 num = randrange(1,150)
                 name = f'apple{num}'
 
+
                 if name not in self.variables:
                     #создаю спрайт и задаю ему все параметры
                     self.variables[name] = pygame.sprite.Sprite()
@@ -68,9 +69,6 @@ class Food():
                 num1 = randrange(1,150)
                 name = f'pear{num1}'
 
-                for n in range(len(self.mx)):
-                    if f1r < self.mx[n][1] + 40 and f1r > self.mx[n][1] - 40:
-                        b = True
                 if name not in self.variables:
                     self.variables[name] = pygame.sprite.Sprite()
                     self.variables[name].image = Food.pear
@@ -82,15 +80,7 @@ class Food():
                     self.mx.append(['p',f2r,10,rside,name])
                     self.fd.add(self.variables[name])
             # elif type == 3:
-            #     b = False
-            #     f1r = randrange(300,801)
-            #     f2r = randrange(350,400)
-            #     rside = choice([-1.5,1.5,0])
-            #     for n in range(len(self.mx)):
-            #         if f1r < self.mx[n][1] + 40 and f1r > self.mx[n][1] - 40:
-            #             b = True
-            #     if not b:
-            #         self.mx.append(['c',f1r,1000,f2r,10,rside])
+            #     
     def spawning(self):
         for n in range(len(self.mx)):
             try:

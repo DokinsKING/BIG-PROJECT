@@ -123,7 +123,6 @@ class Food_m():
                     name = self.mx[n][1]
                     #работа с координатами спрайта
                     self.variables[name].rect.y += 5
-                    print(self.variables[name].rect.y)
                     #когда спрайт улетит вниз, то удалится
                     if self.variables[name].rect.y > self.size[1] + 200:
                         self.variables[name].kill()
