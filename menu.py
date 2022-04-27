@@ -10,7 +10,9 @@ def load_image(name, color_key=None):
         print('Cannot load image:', name)
         raise SystemExit(message)
     return image
-
+#------------------------------------------------
+#------------------------------------------------
+#Ввод логотипа и кнопок
 def logo():
 
     logo = pygame.transform.scale(load_image('logo.png'), (800, 430))
