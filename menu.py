@@ -1,3 +1,4 @@
+from pydoc import render_doc
 import pygame, os
 from random import randrange, choice
 import sys
@@ -16,26 +17,31 @@ def load_image(name, color_key=None):
 def logo():
 
     logo = pygame.transform.scale(load_image('logo.png'), (800, 430))
-    menu_screen.blit(logo, (300, 5))
+    menu_screen.blit(logo, (screenrect[0]//2-390, screenrect[1]//100))
 
 def buttons():
-    global startbutton, exitbutton
+    global startbutton, exitbutton, starttext, exittext, screenrect
 
-    startbutton = pygame.draw.rect(menu_screen, 'blue', (500, 300, 400, 300), 0)
-    exitbutton = pygame.draw.rect(menu_screen, 'blue', (500, 300, 400, 300), 0)
+    screenrect = menu_screen.get_size()
+    fontsgame = pygame.font.Font(None, 100)
+    starttext = fontsgame.render('Играть!', False, 'dark grey')
+    exittext = fontsgame.render('Выход', False, 'dark grey')
 
+    startbutton = pygame.draw.rect(menu_screen, 'grey', (screenrect[0]//2-200, screenrect[1]//2, 400, 100), 10, 30)
+    exitbutton = pygame.draw.rect(menu_screen, 'grey', (screenrect[0]//2-200, screenrect[1]//2+200, 400, 100), 10, 30)
+
+    menu_screen.blit(starttext, (screenrect[0]//2-124, screenrect[1]//2+15))
+    menu_screen.blit(exittext, (screenrect[0]//2-124, screenrect[1]//2+215))
 def set_menu():
     global menu_screen
 
     menu_screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
     return menu_screen
-#------------------------------------------------
-#------------------------------------------------
 #Класс экрана
 class Screen(pygame.Surface):
     def __init__(self):
-        self.screen = pygame.display.set_mode((1920, 1080))
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.size = self.screen.get_size()
 
     def screen_blit(self, screen):
@@ -73,7 +79,7 @@ class Food_m():
             #смотря какой тип будет появлятся еда
             if type == 1:
                 #рандомно выбираю координату x
-                f1r = randrange(0,self.size[0] - 500)
+                f1r = randrange(0,self.size[0])
                 f2r = randrange(-3000,-150)
                 #создаю рандомное имя для спрайта
                 num = randrange(1,150)
@@ -96,7 +102,7 @@ class Food_m():
                     self.fd.add(self.variables[name])
             #тут тоже самое, что и с типом 1
             elif type == 2:
-                f1r = randrange(15,self.size[0] - 500)
+                f1r = randrange(15,self.size[0])
                 f2r = randrange(-3000,-150)
                 num1 = randrange(1,150)
                 name = f'pear{num1}'
@@ -172,6 +178,4 @@ def main():
         fruit.spawning()
         logo()
         pygame.display.flip()
-        
-
 main()
