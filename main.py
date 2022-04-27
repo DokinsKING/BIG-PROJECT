@@ -26,6 +26,10 @@ if __name__ == '__main__':
     #выключил отображение мыши
     pygame.mouse.set_visible(False)
 
+
+    all_good = False
+    real_coords = 0
+
     sw = Sword(screen)
     fd = Food(screen,size)
     
@@ -61,25 +65,23 @@ if __name__ == '__main__':
                 poof.play()
                 score += 1
 
-        blue_circle = laser.tracking_cycle()
-        
         
         screen.fill('black')
-        # screen.blit(score_t, (100,100))
-        # pygame.draw.circle(screen, (255, 255, 255),(13,13),30)
-        # pygame.draw.circle(screen,'purple',(size[0] - 13,13),10)
-        pygame.draw.circle(screen,'blue',(35,size[1] - 35),50)
-        pygame.draw.circle(screen,'pink',(size[0] - 13,size[1] - 13),10)
+        if all_good == False:
+            
+            pygame.draw.rect(screen,'blue',(0,0,size[0],size[1]))
+            pygame.display.flip()
+            answer = laser.tracking_rect()
+            real_coords = answer[0]
+            all_good = answer[1]
+
+            
+
+        elif all_good == True:
+            sw.sword_positions(laser.cycle_laser(), real_coords)
         
-
-
-
-        sw.sword_positions(laser.cycle_laser())
-        print(blue_circle[0]-35, blue_circle[1]-(size[1] - 35))
-
-
-        fd.new_object()
-        fd.spawning()
-        pygame.display.flip()
-        clock.tick(FPS)
+            fd.new_object()
+            fd.spawning()
+            pygame.display.flip()
+            clock.tick(FPS)
     pygame.quit()
