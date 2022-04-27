@@ -11,18 +11,27 @@ def load_image(name, color_key=None):
         raise SystemExit(message)
     return image
 
+def logo():
+
+    logo = pygame.transform.scale(load_image('logo.png'), (800, 430))
+    menu_screen.blit(logo, (300, 5))
+
+def buttons():
+    global startbutton, exitbutton
+
+    startbutton = pygame.draw.rect(menu_screen, 'blue', (500, 300, 400, 300), 0)
+    exitbutton = pygame.draw.rect(menu_screen, 'blue', (500, 300, 400, 300), 0)
+
 def set_menu():
-    global start_button, exit_button
+    global menu_screen
 
     menu_screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
-    start_button = pygame.draw.rect(menu_screen, 'WHITE', (200, 210, 200, 80), 2)
-    exit_button = pygame.draw.rect(menu_screen, 'WHITE', (200, 340, 200, 80), 2)
     return menu_screen
 #------------------------------------------------
 #------------------------------------------------
 #Класс экрана
-class Screen():
+class Screen(pygame.Surface):
     def __init__(self):
         self.screen = pygame.display.set_mode((1920, 1080))
         self.size = self.screen.get_size()
@@ -56,14 +65,14 @@ class Food_m():
         self.mx = []
 
     def new_object(self):
-        if len(self.mx) <= 20:
+        if len(self.mx) <= 50:
             #рандомно выбираю какая еда заспавнится
             type = randrange(1,4)
             #смотря какой тип будет появлятся еда
             if type == 1:
                 #рандомно выбираю координату x
                 f1r = randrange(0,self.size[0] - 500)
-                f2r = randrange(-400,-150)
+                f2r = randrange(-3000,-150)
                 #создаю рандомное имя для спрайта
                 num = randrange(1,150)
                 name = f'apple{num}'
@@ -86,7 +95,7 @@ class Food_m():
             #тут тоже самое, что и с типом 1
             elif type == 2:
                 f1r = randrange(15,self.size[0] - 500)
-                f2r = randrange(-400,-150)
+                f2r = randrange(-3000,-150)
                 num1 = randrange(1,150)
                 name = f'pear{num1}'
 
@@ -105,16 +114,6 @@ class Food_m():
                     self.variables[name].rect.y = f2r
                     self.mx.append(['p',name])
                     self.fd.add(self.variables[name])
-            # elif type == 3:
-            #     b = False
-            #     f1r = randrange(300,801)
-            #     f2r = randrange(350,400)
-            #     rside = choice([-1.5,1.5,0])
-            #     for n in range(len(self.mx)):
-            #         if f1r < self.mx[n][1] + 40 and f1r > self.mx[n][1] - 40:
-            #             b = True
-            #     if not b:
-            #         self.mx.append(['c',f1r,1000,f2r,10,rside])
     def spawning(self):
         for n in range(len(self.mx)):
             try:
@@ -123,7 +122,7 @@ class Food_m():
                     #смотрю какое имя у этого спрайта
                     name = self.mx[n][1]
                     #работа с координатами спрайта
-                    self.variables[name].rect.y += 3
+                    self.variables[name].rect.y += 5
                     print(self.variables[name].rect.y)
                     #когда спрайт улетит вниз, то удалится
                     if self.variables[name].rect.y > self.size[1] + 200:
@@ -134,7 +133,7 @@ class Food_m():
                 #тоже самое что и сверху
                 if self.mx[n][0] == 'p':
                     name = self.mx[n][1]
-                    self.variables[name].rect.y += 3
+                    self.variables[name].rect.y += 5
                     if self.variables[name].rect.y > self.size[1] + 200:
                         self.variables[name].kill()
                         del self.variables[name]
@@ -144,17 +143,18 @@ class Food_m():
                 pass
             except KeyError:
                 pass
-
 #------------------------------------------------
 #------------------------------------------------
 #Основной цикл
+main_screen = Screen()
+main_screen.screen_blit(set_menu())
+
 def main():
     global main_screen
     pygame.init()
     running = True
 
-    main_screen = Screen()
-    main_screen.screen_blit(set_menu())
+    
 
     fruit = Food_m(main_screen.screen,main_screen.size)
 
@@ -165,18 +165,12 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-        main_screen.screen.fill('black')
+        main_screen.screen.fill('light blue')
+        buttons()
         fruit.new_object()
         fruit.spawning()
+        logo()
         pygame.display.flip()
         
 
 main()
-
-
-
-
-
-
-
-
