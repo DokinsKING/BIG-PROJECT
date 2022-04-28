@@ -64,7 +64,11 @@ if __name__ == '__main__':
                 m.kill()
                 poof.play()
                 score += 1
+        
 
+        #для эрнеста
+        food_coords = fd.coords
+        print(food_coords)
         
         screen.fill('black')
         if all_good == False:
