@@ -64,7 +64,11 @@ if __name__ == '__main__':
                 m.kill()
                 poof.play()
                 score += 1
+        
 
+        #для эрнеста
+        food_coords = fd.coords
+        print(food_coords)
         
         screen.fill('black')
         if all_good == False:
@@ -79,9 +83,9 @@ if __name__ == '__main__':
 
         elif all_good == True:
             sw.sword_positions(laser.cycle_laser(), real_coords)
-        
-            fd.new_object()
-            fd.spawning()
+            fd.one_fruit()
+            # fd.new_object()
+            # fd.spawning()
             pygame.display.flip()
             clock.tick(FPS)
     pygame.quit()
