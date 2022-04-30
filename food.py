@@ -147,3 +147,14 @@ class Food():
                 pass
             except KeyError:
                 pass
+
+    def one_fruit(self):
+        self.one = pygame.sprite.Sprite()
+        self.one.image = Food.apple
+        self.one = self.one.image.get_rect()
+        self.one.mask = pygame.mask.from_surface(one.image)
+        self.one.name = one
+        self.one.rect.x = self.size[0]/2
+        self.one.rect.y = self.size[1]/2
+        self.fd.add(self.one)
+        self.fd.draw(self.screen)
