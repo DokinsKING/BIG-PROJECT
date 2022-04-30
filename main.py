@@ -68,8 +68,8 @@ if __name__ == '__main__':
 
         #для эрнеста
         # food_coords = fd.limusin
-        # food_coords = fd.coords
-        # print(food_coords)
+        food_coords = fd.coords
+        print(food_coords)
         
         screen.fill('black')
         if all_good == False:
@@ -88,9 +88,10 @@ if __name__ == '__main__':
             print('laser:', laser_coord)
             print('rect coords', real_coords)
             sw.sword_positions(laser_coord)
-            fd.one_fruit()
-            # fd.new_object()
-            # fd.spawning()
+            # fd.one_fruit()
+            fd.new_object()
+            fd.spawning()
+            
             pygame.display.flip()
             clock.tick(FPS)
     pygame.quit()

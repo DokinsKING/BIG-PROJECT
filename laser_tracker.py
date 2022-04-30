@@ -25,7 +25,6 @@ class LaserTracker:
 
         
         cv2.imshow('rg', res_mask)
-        cv2.namedWindow('rg',  cv2.CV_WINDOW_FULLSCREEN)
         cv2.imshow('fgn', img)
         moments = cv2.moments(res_mask, 1)
         dm01 = moments['m01']
