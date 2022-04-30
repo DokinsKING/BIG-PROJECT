@@ -1,3 +1,4 @@
+from re import S
 import pygame
 import os
 from random import randrange, choice
@@ -17,8 +18,8 @@ def load_image(name, color_key=None):
 
 class Food():
     #загружаем изображение еды
-    apple = pygame.transform.scale(load_image('foods\\red_apple.png'), (80,80))
-    pear = pygame.transform.scale(load_image('foods\\pear.png'), (80,80))
+    apple = pygame.transform.scale(load_image('foods/red_apple.png'), (80,80))
+    pear = pygame.transform.scale(load_image('foods/pear.png'), (80,80))
     
     def __init__(self,screen,size):
         #получил скрин
@@ -34,6 +35,8 @@ class Food():
         self.mx = []
 
         self.coords = []
+
+        self.limusin = []
 
     def new_object(self):
         if len(self.mx) <= 10:
@@ -151,10 +154,11 @@ class Food():
     def one_fruit(self):
         self.one = pygame.sprite.Sprite()
         self.one.image = Food.apple
-        self.one = self.one.image.get_rect()
-        self.one.mask = pygame.mask.from_surface(one.image)
-        self.one.name = one
+        self.one.rect = self.one.image.get_rect()
+        self.one.mask = pygame.mask.from_surface(self.one.image)
+        self.one.name = 'one'
         self.one.rect.x = self.size[0]/2
         self.one.rect.y = self.size[1]/2
+        self.limusin = [self.one.rect.x,self.one.rect.y]
         self.fd.add(self.one)
         self.fd.draw(self.screen)

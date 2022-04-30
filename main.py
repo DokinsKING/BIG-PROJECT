@@ -47,12 +47,12 @@ if __name__ == '__main__':
                 if event.key == pygame.K_ESCAPE:
                     running = False
 
-        # if score == 1:
-        #     score_t = f.render(f'Вы лопнули {score} фрукт',True,'white')
-        # elif 2 <= score <= 4:
-        #     score_t = f.render(f'Вы лопнули {score} фрукта',True,'white')
-        # else:
-        #     score_t = f.render(f'Вы лопнули {score} фруктов',True,'white')
+        if score == 1:
+            score_t = f.render(f'Вы лопнули {score} фрукт',True,'white')
+        elif 2 <= score <= 4:
+            score_t = f.render(f'Вы лопнули {score} фрукта',True,'white')
+        else:
+            score_t = f.render(f'Вы лопнули {score} фруктов',True,'white')
 
         #при сталкновении начинатеся реакция
         for m in fd.fd:
@@ -67,8 +67,9 @@ if __name__ == '__main__':
         
 
         #для эрнеста
-        food_coords = fd.coords
-        print(food_coords)
+        # food_coords = fd.limusin
+        # food_coords = fd.coords
+        # print(food_coords)
         
         screen.fill('black')
         if all_good == False:
@@ -82,7 +83,11 @@ if __name__ == '__main__':
             
 
         elif all_good == True:
-            sw.sword_positions(laser.cycle_laser(), real_coords)
+            # sw.sword_positions(laser.cycle_laser(), real_coords)
+            laser_coord = laser.cycle_laser()
+            print('laser:', laser_coord)
+            print('rect coords', real_coords)
+            sw.sword_positions(laser_coord)
             fd.one_fruit()
             # fd.new_object()
             # fd.spawning()

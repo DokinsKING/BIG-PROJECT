@@ -26,7 +26,7 @@ class Sword():
             self.sprite.mask = pygame.mask.from_surface(self.sprite.image)
             self.sw.add(self.sprite)
 
-        def sword_positions(self, coord, real_coords):
+        def sword_positions(self, coord):
             #координаты мыши
             mouse = pygame.mouse.get_pos()
             #ставлю мышь в середину спрайт
@@ -35,8 +35,8 @@ class Sword():
                 self.sprite.rect.y = mouse[1] - self.sprite.image.get_rect()[3]/2
                 self.sw.draw(self.screen)
             else:
-                self.sprite.rect.x = coord[0] - self.sprite.image.get_rect()[2]/2 - real_coords[0]
-                self.sprite.rect.y = abs(coord[1] - self.sprite.image.get_rect()[3]/2 - real_coords[1])
-                print(self.sprite.rect.x, self.sprite.rect.y)
+                self.sprite.rect.x = coord[0] - self.sprite.image.get_rect()[2]/2 
+                self.sprite.rect.y = coord[1] - self.sprite.image.get_rect()[3]/2 
+                print(self.sprite.rect.x, self.sprite.rect.y, 'coord sword')
                 self.sw.draw(self.screen)
 

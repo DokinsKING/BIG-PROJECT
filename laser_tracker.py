@@ -10,25 +10,32 @@ class LaserTracker:
 
     def cycle_laser(self):
         _, img = self.cap.read()
+
+
+
+        
         gaus = cv2.GaussianBlur(img, (5, 5), 0)
         hsv = cv2.cvtColor(gaus, cv2.COLOR_BGR2HSV)
 
 
-        min_green = np.array((40, 40, 60))
-        max_green = np.array((80, 255, 255))
+
+        min_green = np.array((50, 50, 60))
+        max_green = np.array((100, 255, 255))
         res_mask = cv2.inRange(hsv, min_green, max_green)
 
         
-        cv2.imshow('rg', img)
+        cv2.imshow('rg', res_mask)
+        cv2.namedWindow('rg',  cv2.CV_WINDOW_FULLSCREEN)
+        cv2.imshow('fgn', img)
         moments = cv2.moments(res_mask, 1)
         dm01 = moments['m01']
         dm10 = moments['m10']
         dArea = moments['m00']
 
 
-        if dArea > 20:
+        if dArea > 50:
             x = int(dm10/dArea) 
-            y = int(dm01/dArea) - 1000
+            y = int(dm01/dArea) 
             return [x, y]
 
         return [0, 0]
@@ -51,7 +58,7 @@ class LaserTracker:
             area = int(rect[1][0]*rect[1][1])
             if area > 30000:
                 cv2.drawContours(img, [box], 0, (255, 0, 0), 2)
-                cv2.imshow('contours', img)
+                # cv2.imshow('contours', img)
                 return[box[0].tolist(), True]
             
        
