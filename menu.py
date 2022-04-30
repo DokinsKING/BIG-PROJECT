@@ -73,21 +73,21 @@ class Food_m():
         self.mx = []
 
     def new_object(self):
-        if len(self.mx) <= 50:
+        if len(self.mx) <= 100:
             #рандомно выбираю какая еда заспавнится
             type = randrange(1,4)
             #смотря какой тип будет появлятся еда
             if type == 1:
                 #рандомно выбираю координату x
-                f1r = randrange(0,self.size[0])
-                f2r = randrange(-3000,-150)
+                f1r = randrange(0,self.size[0]-80)
+                f2r = randrange(-150,-100)
                 #создаю рандомное имя для спрайта
                 num = randrange(1,150)
                 name = f'apple{num}'
 
                 for i in range(len(self.mx)):
                     if self.variables[self.mx[i][1]].rect.x > f1r - 100 and self.variables[self.mx[i][1]].rect.x < f1r + 100:
-                        break
+                        f2r = self.size[1] + 250
 
                 if name not in self.variables:
                     #создаю спрайт и задаю ему все параметры
@@ -102,15 +102,15 @@ class Food_m():
                     self.fd.add(self.variables[name])
             #тут тоже самое, что и с типом 1
             elif type == 2:
-                f1r = randrange(15,self.size[0])
-                f2r = randrange(-3000,-150)
+                f1r = randrange(15,self.size[0]-80)
+                f2r = randrange(-200,-100)
                 num1 = randrange(1,150)
                 name = f'pear{num1}'
 
 
                 for i in range(len(self.mx)):
                     if self.variables[self.mx[i][1]].rect.x > f1r - 100 and self.variables[self.mx[i][1]].rect.x < f1r + 100:
-                        break
+                        f2r = self.size[1] + 250
 
                 if name not in self.variables:
                     self.variables[name] = pygame.sprite.Sprite()
