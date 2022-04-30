@@ -14,7 +14,7 @@ def load_image(name, color_key=None):
     return image
 
 class Sword():
-        image = load_image('sword\\aim.png')
+        image = load_image('sword/aim.png')
         image = pygame.transform.scale(image, (200,200))
         def __init__(self,screen):
             #тоже самое, что и в фуд
