@@ -3,6 +3,7 @@ import cv2
 import os
 from random import randrange, choice
 import sys
+import menu
 
 #часть Саидаги
 from food import Food 
@@ -72,7 +73,7 @@ if __name__ == '__main__':
         # print(food_coords)
         food_coords = fd.coords
         
-
+        menu.menu()
         
         screen.fill('black')
         if all_good == False:

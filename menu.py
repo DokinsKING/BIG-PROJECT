@@ -2,6 +2,12 @@ from pydoc import render_doc
 import pygame, os
 from random import randrange, choice
 import sys
+from ctypes  import *
+import main
+
+
+
+displayrect = [windll.user32.GetSystemMetrics(0), windll.user32.GetSystemMetrics(1)]
 
 def load_image(name, color_key=None):
     fullname = os.path.join('samples', name)
@@ -35,13 +41,13 @@ def buttons():
 def set_menu():
     global menu_screen
 
-    menu_screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    menu_screen = pygame.display.set_mode(displayrect)
 
     return menu_screen
 #Класс экрана
 class Screen(pygame.Surface):
     def __init__(self):
-        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode(displayrect)
         self.size = self.screen.get_size()
 
     def screen_blit(self, screen):
@@ -50,7 +56,6 @@ class Screen(pygame.Surface):
     def clean(self):
         self.screen.fill('BLACK')
         pygame.display.flip()
-
 #------------------------------------------------
 #------------------------------------------------
 #Фрукты
@@ -153,15 +158,13 @@ class Food_m():
 #------------------------------------------------
 #------------------------------------------------
 #Основной цикл
-main_screen = Screen()
-main_screen.screen_blit(set_menu())
-
-def main():
+def menu():
     global main_screen, exitbutton, startbutton
     pygame.init()
     running = True
-
     
+    main_screen = Screen()
+    main_screen.screen_blit(set_menu())
 
     fruit = Food_m(main_screen.screen,main_screen.size)
 
@@ -172,15 +175,20 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
+                if event.key == pygame.K_F1:
+                    pygame.display.toggle_fullscreen()
+                if event.key == pygame.K_F2:
+                    pygame.display.iconify()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if exitbutton.collidepoint(event.pos) == True:
                     running = False
                 if startbutton.collidepoint(event.pos) == True:
-                    pass
+                    running = False
+
         main_screen.screen.fill('light blue')
         buttons()
         fruit.new_object()
         fruit.spawning()
         logo()
         pygame.display.flip()
-main()
+menu()
