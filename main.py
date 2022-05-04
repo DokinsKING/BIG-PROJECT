@@ -71,6 +71,7 @@ if __name__ == '__main__':
         # food_coords = fd.limusin
         # print(food_coords)
         food_coords = fd.coords
+        
 
         
         screen.fill('black')

@@ -73,12 +73,9 @@ class LaserTracker:
         # cv2.imshow('result', result)
 
         return result
-        
-            
-       
 
-       
         
+    
 
     
     def cameraoff(self):
