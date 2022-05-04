@@ -157,7 +157,7 @@ main_screen = Screen()
 main_screen.screen_blit(set_menu())
 
 def main():
-    global main_screen
+    global main_screen, exitbutton, startbutton
     pygame.init()
     running = True
 
@@ -172,6 +172,11 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if exitbutton.collidepoint(event.pos) == True:
+                    running = False
+                if startbutton.collidepoint(event.pos) == True:
+                    pass
         main_screen.screen.fill('light blue')
         buttons()
         fruit.new_object()
