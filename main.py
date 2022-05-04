@@ -19,6 +19,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     running = True
     size = screen.get_size()
+    print(size)
     clock = pygame.time.Clock()
     FPS = 60
     score = 0
@@ -68,8 +69,9 @@ if __name__ == '__main__':
 
         #для эрнеста
         # food_coords = fd.limusin
+        # print(food_coords)
         food_coords = fd.coords
-        print(food_coords)
+
         
         screen.fill('black')
         if all_good == False:
@@ -83,11 +85,10 @@ if __name__ == '__main__':
             
 
         elif all_good == True:
-            # sw.sword_positions(laser.cycle_laser(), real_coords)
-            laser_coord = laser.cycle_laser()
-            print('laser:', laser_coord)
-            print('rect coords', real_coords)
+            result_img = laser.transform_rect(real_coords)
+            laser_coord = laser.cycle_laser(result_img)
             sw.sword_positions(laser_coord)
+
             # fd.one_fruit()
             fd.new_object()
             fd.spawning()

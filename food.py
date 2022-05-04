@@ -157,8 +157,8 @@ class Food():
         self.one.rect = self.one.image.get_rect()
         self.one.mask = pygame.mask.from_surface(self.one.image)
         self.one.name = 'one'
-        self.one.rect.x = self.size[0]/2
-        self.one.rect.y = self.size[1]/2
+        self.one.rect.x = self.size[0] - 200
+        self.one.rect.y = self.size[1] - 200
         self.limusin = [self.one.rect.x,self.one.rect.y]
         self.fd.add(self.one)
         self.fd.draw(self.screen)

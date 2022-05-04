@@ -35,8 +35,7 @@ class Sword():
                 self.sprite.rect.y = mouse[1] - self.sprite.image.get_rect()[3]/2
                 self.sw.draw(self.screen)
             else:
-                self.sprite.rect.x = coord[0] - self.sprite.image.get_rect()[2]/2 
-                self.sprite.rect.y = coord[1] - self.sprite.image.get_rect()[3]/2 
-                print(self.sprite.rect.x, self.sprite.rect.y, 'coord sword')
-                self.sw.draw(self.screen)
+                    self.sprite.rect.x = (coord[0]- self.sprite.image.get_rect()[2]/2)
+                    self.sprite.rect.y = (coord[1]- self.sprite.image.get_rect()[3]/2) 
+                    self.sw.draw(self.screen)
 
