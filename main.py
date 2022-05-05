@@ -73,7 +73,6 @@ if __name__ == '__main__':
         # print(food_coords)
         food_coords = fd.coords
         
-        menu.menu()
         
         screen.fill('black')
         if all_good == False:
@@ -87,7 +86,8 @@ if __name__ == '__main__':
             
 
         elif all_good == True:
-            result_img = laser.transform_rect(real_coords)
+            menu.menu()
+            result_img = laser.transform_rect(real_coords,size)
             laser_coord = laser.cycle_laser(result_img)
             sw.sword_positions(laser_coord)
 

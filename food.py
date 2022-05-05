@@ -78,9 +78,7 @@ class Food():
                 num1 = randrange(1,150)
                 name = f'pear{num1}'
 
-                for n in range(len(self.mx)):
-                    if f1r < self.mx[n][1] + 40 and f1r > self.mx[n][1] - 40:
-                        b = True
+
                 if name not in self.variables:
                     #создаю спрайт и задаю ему все параметры
                     self.variables[name] = pygame.sprite.Sprite()
@@ -93,63 +91,48 @@ class Food():
                     self.mx.append(['p',f2r,10,rside,name])
                     self.coords.append([self.variables[name].rect.x,self.variables[name].rect.y])
                     self.fd.add(self.variables[name])
-            # elif type == 3:
-            #     b = False
-            #     f1r = randrange(300,801)
-            #     f2r = randrange(350,400)
-            #     rside = choice([-1.5,1.5,0])
-            #     for n in range(len(self.mx)):
-            #         if f1r < self.mx[n][1] + 40 and f1r > self.mx[n][1] - 40:
-            #             b = True
-            #     if not b:
-            #         self.mx.append(['c',f1r,1000,f2r,10,rside])
     def spawning(self):
         for n in range(len(self.mx)):
-            try:
-                #если параметр а-apple то создаем яблоко
-                if self.mx[n][0] == 'a':
-                    #смотрю какое имя у этого спрайта
-                    name = self.mx[n][4]
-                    #работа с координатами спрайта
-                    self.variables[name].rect.y -= self.mx[n][2]
-                    self.variables[name].rect.x += self.mx[n][3]
-                    self.coords[n][0] -= self.mx[n][2]
-                    self.coords[n][0] += self.mx[n][3]
-                    #это типо гравитация и чем выше тем медленнне литит спрайт, потом уже вниз
-                    if self.variables[name].rect.y < self.mx[n][1] + 100:
-                        self.mx[n][2] -= 0.5
-                    #когда спрайт улетит вниз, то поменяет координаты и поднимется уже с друго места
-                    if self.variables[name].rect.y > self.size[1] + 200:
-                        self.variables[name].rect.y = self.size[1] + 200
-                        self.variables[name].rect.x = randrange(500,self.size[0] - 500)
-                        self.mx[n][1] = randrange(self.size[1]/3,self.size[1]/2)
-                        self.mx[n][2] = 10
-                        self.mx[n][3] = choice([-1.5,1.5,0])
-                    self.fd.draw(self.screen)
-                #если параметр p-pear то создаем грушу
-                if self.mx[n][0] == 'p':
-                    #смотрю какое имя у этого спрайта
-                    name = self.mx[n][4]
-                    #работа с координатами спрайта
-                    self.variables[name].rect.y -= self.mx[n][2]
-                    self.variables[name].rect.x += self.mx[n][3]
-                    self.coords[n][0] -= self.mx[n][2]
-                    self.coords[n][0] += self.mx[n][3]
-                    #это типо гравитация и чем выше тем медленнне литит спрайт, потом уже вниз
-                    if self.variables[name].rect.y < self.mx[n][1] + 100:
-                        self.mx[n][2] -= 0.5
-                    #когда спрайт улетит вниз, то поменяет координаты и поднимется уже с друго места
-                    if self.variables[name].rect.y > self.size[1] + 200:
-                        self.variables[name].rect.y = self.size[1] + 200
-                        self.variables[name].rect.x = randrange(500,self.size[0] - 500)
-                        self.mx[n][1] = randrange(self.size[1]/3,self.size[1]/2)
-                        self.mx[n][2] = 10
-                        self.mx[n][3] = choice([-1.5,1.5,0])
-                    self.fd.draw(self.screen)
-            except IndexError:
-                pass
-            except KeyError:
-                pass
+            #если параметр а-apple то создаем яблоко
+            if self.mx[n][0] == 'a':
+                #смотрю какое имя у этого спрайта
+                name = self.mx[n][4]
+                #работа с координатами спрайта
+                self.variables[name].rect.y -= self.mx[n][2]
+                self.variables[name].rect.x += self.mx[n][3]
+                self.coords[n][0] -= self.mx[n][2]
+                self.coords[n][0] += self.mx[n][3]
+                #это типо гравитация и чем выше тем медленнне литит спрайт, потом уже вниз
+                if self.variables[name].rect.y < self.mx[n][1] + 100:
+                    self.mx[n][2] -= 0.5
+                #когда спрайт улетит вниз, то поменяет координаты и поднимется уже с друго места
+                if self.variables[name].rect.y > self.size[1] + 200:
+                    self.variables[name].rect.y = self.size[1] + 200
+                    self.variables[name].rect.x = randrange(500,self.size[0] - 500)
+                    self.mx[n][1] = randrange(self.size[1]/3,self.size[1]/2)
+                    self.mx[n][2] = 10
+                    self.mx[n][3] = choice([-1.5,1.5,0])
+                self.fd.draw(self.screen)
+            #если параметр p-pear то создаем грушу
+            if self.mx[n][0] == 'p':
+                #смотрю какое имя у этого спрайта
+                name = self.mx[n][4]
+                #работа с координатами спрайта
+                self.variables[name].rect.y -= self.mx[n][2]
+                self.variables[name].rect.x += self.mx[n][3]
+                self.coords[n][0] -= self.mx[n][2]
+                self.coords[n][0] += self.mx[n][3]
+                #это типо гравитация и чем выше тем медленнне литит спрайт, потом уже вниз
+                if self.variables[name].rect.y < self.mx[n][1] + 100:
+                    self.mx[n][2] -= 0.5
+                #когда спрайт улетит вниз, то поменяет координаты и поднимется уже с друго места
+                if self.variables[name].rect.y > self.size[1] + 200:
+                    self.variables[name].rect.y = self.size[1] + 200
+                    self.variables[name].rect.x = randrange(500,self.size[0] - 500)
+                    self.mx[n][1] = randrange(self.size[1]/3,self.size[1]/2)
+                    self.mx[n][2] = 10
+                    self.mx[n][3] = choice([-1.5,1.5,0])
+                self.fd.draw(self.screen)
 
     def one_fruit(self):
         self.one = pygame.sprite.Sprite()
