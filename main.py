@@ -25,7 +25,7 @@ if __name__ == '__main__':
     FPS = 60
     score = 0
     poof = pygame.mixer.Sound('samples/sound/poof.mp3')
-    #выключил отображение мыши
+    #выключили отображение мыши
     pygame.mouse.set_visible(False)
 
 
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     real_coords = 0
 
     sw = Sword(screen)
-    fd = Food(screen,size)
+    fd = pygame.sprite.Group()
     
     f = pygame.font.Font(None, 36)
 
@@ -48,53 +48,50 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-
+        #разные вариации отображения количества фруктов
         if score == 1:
             score_t = f.render(f'Вы лопнули {score} фрукт',True,'white')
+        elif '1' in str(score)[1::] and '11' not in str(score):
+            score_t = f.render(f'Вы лопнули {score} фрукт',True,'white')
         elif 2 <= score <= 4:
+            score_t = f.render(f'Вы лопнули {score} фрукта',True,'white')
+        elif '2' in str(score)[1::] or '3' in str(score)[1::] or '4' in str(score)[1::] and '12' not in str(score) and '13' not in str(score) and '14' not in str(score):
             score_t = f.render(f'Вы лопнули {score} фрукта',True,'white')
         else:
             score_t = f.render(f'Вы лопнули {score} фруктов',True,'white')
 
-        #при сталкновении начинатеся реакция
-        for m in fd.fd:
-            if pygame.sprite.collide_mask(sw.sprite, m):
-                for index, item in enumerate(fd.variables):
-                    if str(item) == m.name:
-                        del fd.mx[index]
-                del fd.variables[str(m.name)]
-                m.kill()
-                poof.play()
-                score += 1
-        
+        if len(fd) <= 10:
+            fd.add(Food(screen,size))
 
-        #для эрнеста
-        # food_coords = fd.limusin
-        # print(food_coords)
-        food_coords = fd.coords
+        #при сталкновении групп спрайтов начинатеся реакция
+        if pygame.sprite.groupcollide(sw.sw, fd, False, True):
+            poof.play()
+            score += 1
         
         
         screen.fill('black')
         if all_good == False:
-            
             pygame.draw.rect(screen,'blue',(0,0,size[0],size[1]))
             pygame.display.flip()
+
             answer = laser.tracking_rect()
             real_coords = answer[0]
             all_good = answer[1]
+            # all_good = True
 
             
 
         elif all_good == True:
             # menu.menu()
-            result_img = laser.transform_rect(real_coords)
+            result_img = laser.transform_rect(real_coords,size)
             laser_coord = laser.cycle_laser(result_img)
             sw.sword_positions(laser_coord)
+            # sw.sword_positions(['Привет'])
 
-            # fd.one_fruit()
-            fd.new_object()
-            fd.spawning()
-            
+            fd.update()
+            fd.draw(screen)
+            screen.blit(score_t, (100,100))
+
             pygame.display.flip()
             clock.tick(FPS)
     pygame.quit()

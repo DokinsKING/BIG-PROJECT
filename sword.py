@@ -15,7 +15,7 @@ def load_image(name, color_key=None):
 
 class Sword():
         image = load_image('sword/aim.png')
-        image = pygame.transform.scale(image, (200,200))
+        image = pygame.transform.scale(image, (10,10))
         def __init__(self,screen):
             #тоже самое, что и в фуд
             self.screen = screen
@@ -30,12 +30,12 @@ class Sword():
             #координаты мыши
             mouse = pygame.mouse.get_pos()
             #ставлю мышь в середину спрайт
-            if coord == ['Привет']:
+            if coord == 'Привет':
                 self.sprite.rect.x = mouse[0] - self.sprite.image.get_rect()[2]/2
                 self.sprite.rect.y = mouse[1] - self.sprite.image.get_rect()[3]/2
                 self.sw.draw(self.screen)
             else:
-                    self.sprite.rect.x = (coord[0]- self.sprite.image.get_rect()[2]/2)
-                    self.sprite.rect.y = (coord[1]- self.sprite.image.get_rect()[3]/2) 
-                    self.sw.draw(self.screen)
+                self.sprite.rect.x = (coord[0]- self.sprite.image.get_rect()[2]/2)
+                self.sprite.rect.y = (coord[1]- self.sprite.image.get_rect()[3]/2) 
+                self.sw.draw(self.screen)
 
