@@ -3,7 +3,7 @@ import cv2
 import os
 from random import randrange, choice
 import sys
-import menu
+# import menu
 
 #часть Саидаги
 from food import Food 
@@ -86,8 +86,8 @@ if __name__ == '__main__':
             
 
         elif all_good == True:
-            menu.menu()
-            result_img = laser.transform_rect(real_coords,size)
+            # menu.menu()
+            result_img = laser.transform_rect(real_coords)
             laser_coord = laser.cycle_laser(result_img)
             sw.sword_positions(laser_coord)
 

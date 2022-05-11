@@ -47,7 +47,7 @@ class Food():
                 #рандомно выбираю координату x
                 f1r = randrange(500,self.size[0] - 500)
                 #рандомно выбираю максимальное высоту, на которую поднимится еда
-                f2r = randrange(self.size[1]/3,self.size[1]/2)
+                f2r = randrange(round(self.size[1]/3),round(self.size[1]/2))
                 #рандомно выбираю в какую сторону полетит еда
                 rside = choice([-1.5,1.5,0])
                 #создаю рандомное имя для спрайта
@@ -71,7 +71,7 @@ class Food():
                 #рандомно выбираю координату x
                 f1r = randrange(500,self.size[0] - 500)
                 #рандомно выбираю максимальное высоту, на которую поднимится еда
-                f2r = randrange(self.size[1]/3,self.size[1]/2)
+                f2r = randrange(round(self.size[1]/3),round(self.size[1]/2))
                 #рандомно выбираю в какую сторону полетит еда
                 rside = choice([-1.5,1.5,0])
                 #создаю рандомное имя для спрайта
@@ -109,7 +109,7 @@ class Food():
                 if self.variables[name].rect.y > self.size[1] + 200:
                     self.variables[name].rect.y = self.size[1] + 200
                     self.variables[name].rect.x = randrange(500,self.size[0] - 500)
-                    self.mx[n][1] = randrange(self.size[1]/3,self.size[1]/2)
+                    self.mx[n][1] = randrange(round(self.size[1]/3),round(self.size[1]/2))
                     self.mx[n][2] = 10
                     self.mx[n][3] = choice([-1.5,1.5,0])
                 self.fd.draw(self.screen)
@@ -129,7 +129,7 @@ class Food():
                 if self.variables[name].rect.y > self.size[1] + 200:
                     self.variables[name].rect.y = self.size[1] + 200
                     self.variables[name].rect.x = randrange(500,self.size[0] - 500)
-                    self.mx[n][1] = randrange(self.size[1]/3,self.size[1]/2)
+                    self.mx[n][1] = randrange(round(self.size[1]/3),round(self.size[1]/2))
                     self.mx[n][2] = 10
                     self.mx[n][3] = choice([-1.5,1.5,0])
                 self.fd.draw(self.screen)

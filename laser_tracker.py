@@ -62,15 +62,15 @@ class LaserTracker:
                 return[box.tolist(), True]
 
 
-    def transform_rect(self, box,size):
+    def transform_rect(self, box):
         _, img = self.cap.read()
         pts1 = np.float32([box[1], box[0], box[2], box[3]])
         
-        pts2 = np.float32([[0, 0], [0, size[1]], [size[0], 0], [size[0], size[1]]])
+        pts2 = np.float32([[0, 0], [0, 1234], [2194, 0], [2194, 1234]])
         matrix = cv2.getPerspectiveTransform(pts1, pts2)
         result = cv2.warpPerspective(img, matrix, (2194, 1234))
 
-        # cv2.imshow('result', result)
+        cv2.imshow('result', result)
 
         return result
 
@@ -79,7 +79,7 @@ class LaserTracker:
 
     
     def cameraoff(self):
-        cap.release()
+        self.cap.release()
         cv2.destroyAllWindows()
 
 # contours, hiar = cv2.findContours(res_mask.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
