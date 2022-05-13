@@ -8,7 +8,7 @@ import sys
 #часть Саидаги
 from food import Food 
 from sword import Sword
-
+import time
 #часть Эрнеста
 from laser_tracker import LaserTracker
 
@@ -63,10 +63,18 @@ if __name__ == '__main__':
         if len(fd) <= 10:
             fd.add(Food(screen,size))
 
+        gotit = pygame.sprite.groupcollide(sw.sw, fd, False, False)
+        
+            
+
         #при сталкновении групп спрайтов начинатеся реакция
-        if pygame.sprite.groupcollide(sw.sw, fd, False, True):
-            poof.play()
-            score += 1
+        if gotit:
+            for item in gotit.items():
+                item[1][0].was = True
+        for i in fd:
+            if i.score_plus == 1:
+                poof.play()
+                score += i.score_plus
         
         
         screen.fill('black')
@@ -74,19 +82,19 @@ if __name__ == '__main__':
             pygame.draw.rect(screen,'blue',(0,0,size[0],size[1]))
             pygame.display.flip()
 
-            answer = laser.tracking_rect()
-            real_coords = answer[0]
-            all_good = answer[1]
-            # all_good = True
+            # answer = laser.tracking_rect()
+            # real_coords = answer[0]
+            # all_good = answer[1]
+            all_good = True
 
             
 
         elif all_good == True:
             # menu.menu()
-            result_img = laser.transform_rect(real_coords,size)
-            laser_coord = laser.cycle_laser(result_img)
-            sw.sword_positions(laser_coord)
-            # sw.sword_positions(['Привет'])
+            # result_img = laser.transform_rect(real_coords,size)
+            # laser_coord = laser.cycle_laser(result_img)
+            # sw.sword_positions(laser_coord)
+            sw.sword_positions('Привет')
 
             fd.update()
             fd.draw(screen)
