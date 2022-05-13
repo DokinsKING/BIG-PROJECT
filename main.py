@@ -82,19 +82,19 @@ if __name__ == '__main__':
             pygame.draw.rect(screen,'blue',(0,0,size[0],size[1]))
             pygame.display.flip()
 
-            # answer = laser.tracking_rect()
-            # real_coords = answer[0]
-            # all_good = answer[1]
-            all_good = True
+            answer = laser.tracking_rect()
+            real_coords = answer[0]
+            all_good = answer[1]
+            # all_good = True
 
             
 
         elif all_good == True:
             # menu.menu()
-            # result_img = laser.transform_rect(real_coords,size)
-            # laser_coord = laser.cycle_laser(result_img)
-            # sw.sword_positions(laser_coord)
-            sw.sword_positions('Привет')
+            result_img = laser.transform_rect(real_coords,size)
+            laser_coord = laser.cycle_laser(result_img)
+            sw.sword_positions(laser_coord)
+            # sw.sword_positions('Привет')
 
             fd.update()
             fd.draw(screen)
