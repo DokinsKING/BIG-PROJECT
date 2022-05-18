@@ -56,7 +56,7 @@ class LaserTracker:
             box = cv2.boxPoints(rect)
             box = np.round(np.int0(box))
             area = int(rect[1][0]*rect[1][1])
-            if area > 30000:
+            if area > 35000:
                 cv2.drawContours(img, [box], 0, (255, 0, 0), 2)
                 cv2.imshow('rect', img)
                 return[box.tolist(), True]
@@ -64,7 +64,7 @@ class LaserTracker:
 
     def transform_rect(self, box,size):
         _, img = self.cap.read()
-        pts1 = np.float32([box[1], box[0], box[2], box[3]])
+        pts1 = np.float32([box[0], box[3], box[1], box[2]])
         
         pts2 = np.float32([[0, 0], [0, size[1]], [size[0], 0], [size[0], size[1]]])
         matrix = cv2.getPerspectiveTransform(pts1, pts2)
