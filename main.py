@@ -3,13 +3,12 @@ import cv2
 import os
 from random import randrange, choice
 import sys
-# import menu
+import time
 
-#часть Саидаги
+
 from food import Food 
 from sword import Sword
-import time
-#часть Эрнеста
+import menu
 from laser_tracker import LaserTracker
 
  
@@ -25,8 +24,7 @@ if __name__ == '__main__':
     FPS = 60
     score = 0
     poof = pygame.mixer.Sound('samples/sound/poof.mp3')
-    #выключили отображение мыши
-    pygame.mouse.set_visible(False)
+
 
 
     all_good = False
@@ -34,6 +32,7 @@ if __name__ == '__main__':
 
     sw = Sword(screen)
     fd = pygame.sprite.Group()
+    mn = menu.Menu(screen, size)
     
     f = pygame.font.Font(None, 36)
 
@@ -79,18 +78,27 @@ if __name__ == '__main__':
         
         screen.fill('black')
         if all_good == False:
-            pygame.draw.rect(screen,'blue',(0,0,size[0],size[1]))
-            pygame.display.flip()
-
-            answer = laser.tracking_rect()
-            real_coords = answer[0]
-            all_good = answer[1]
-            # all_good = True
+            if mn.mn_r == False:
+                mn.main()
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if mn.exitbutton.collidepoint(event.pos) == True:
+                            running = False
+                        if mn.startbutton.collidepoint(event.pos) == True:
+                            mn.mn_r = True
+            else:
+                pygame.draw.rect(screen,'blue',(0,0,size[0],size[1]))
+                pygame.display.flip()
+                answer = laser.tracking_rect()
+                real_coords = answer[0]
+                all_good = answer[1]
+                # all_good = True
 
             
 
         elif all_good == True:
-            # menu.menu()
+            #выключили отображение мыши
+            pygame.mouse.set_visible(False)
             result_img = laser.transform_rect(real_coords,size)
             laser_coord = laser.cycle_laser(result_img)
             sw.sword_positions(laser_coord)

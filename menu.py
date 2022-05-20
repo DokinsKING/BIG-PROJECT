@@ -1,13 +1,8 @@
-from pydoc import render_doc
-import pygame, os
+import pygame
+import cv2
+import os
 from random import randrange, choice
 import sys
-from ctypes  import *
-import main
-
-
-
-displayrect = [windll.user32.GetSystemMetrics(0), windll.user32.GetSystemMetrics(1)]
 
 def load_image(name, color_key=None):
     fullname = os.path.join('samples', name)
@@ -17,178 +12,30 @@ def load_image(name, color_key=None):
         print('Cannot load image:', name)
         raise SystemExit(message)
     return image
-#------------------------------------------------
-#------------------------------------------------
-#Ввод логотипа и кнопок
-def logo():
 
-    logo = pygame.transform.scale(load_image('logo.png'), (800, 430))
-    menu_screen.blit(logo, (screenrect[0]//2-390, screenrect[1]//100))
-
-def buttons():
-    global startbutton, exitbutton, starttext, exittext, screenrect
-
-    screenrect = menu_screen.get_size()
-    fontsgame = pygame.font.Font(None, 100)
-    starttext = fontsgame.render('Играть!', False, 'dark grey')
-    exittext = fontsgame.render('Выход', False, 'dark grey')
-
-    startbutton = pygame.draw.rect(menu_screen, 'grey', (screenrect[0]//2-200, screenrect[1]//2, 400, 100), 10, 30)
-    exitbutton = pygame.draw.rect(menu_screen, 'grey', (screenrect[0]//2-200, screenrect[1]//2+200, 400, 100), 10, 30)
-
-    menu_screen.blit(starttext, (screenrect[0]//2-124, screenrect[1]//2+15))
-    menu_screen.blit(exittext, (screenrect[0]//2-124, screenrect[1]//2+215))
-def set_menu():
-    global menu_screen
-
-    menu_screen = pygame.display.set_mode(displayrect)
-
-    return menu_screen
-#Класс экрана
-class Screen(pygame.Surface):
-    def __init__(self):
-        self.screen = pygame.display.set_mode(displayrect)
-        self.size = self.screen.get_size()
-
-    def screen_blit(self, screen):
-        self.screen.blit(screen, (0, 0))
-
-    def clean(self):
-        self.screen.fill('BLACK')
-        pygame.display.flip()
-#------------------------------------------------
-#------------------------------------------------
-#Фрукты
-class Food_m():
-    #загружаем изображение еды
-    apple = pygame.transform.scale(load_image('foods/red_apple.png'), (80,80))
-    pear = pygame.transform.scale(load_image('foods/pear.png'), (80,80))
-    
+class Menu():
     def __init__(self,screen,size):
-        #получил скрин
         self.screen = screen
-        #создал группу для спрайтов
-        self.fd = pygame.sprite.Group()
-
         self.size = size
-        
-        #создал словарь, чтобы генерировать имена спрайтов
-        self.variables = {}
-        #создал список, там будут параметры каждого спрайта
-        self.mx = []
+        self.mn = pygame.display.set_mode(self.size)
+        self.fruits = pygame.sprite.Group()
+        self.mn_r = False
+    def logo_sp(self):
+        self.logo = pygame.transform.scale(load_image('logo.png'), (800, 430))
+        self.mn.blit(self.logo, (round(self.size[0]//2-390), round(self.size[1]//100)))
+    def buttons(self):
+        self.fontsgame = pygame.font.Font(None, 100)
+        self.starttext = self.fontsgame.render('Играть!', False, 'dark grey')
+        self.exittext = self.fontsgame.render('Выход', False, 'dark grey')
 
-    def new_object(self):
-        if len(self.mx) <= 100:
-            #рандомно выбираю какая еда заспавнится
-            type = randrange(1,4)
-            #смотря какой тип будет появлятся еда
-            if type == 1:
-                #рандомно выбираю координату x
-                f1r = randrange(0,self.size[0]-80)
-                f2r = randrange(-150,-100)
-                #создаю рандомное имя для спрайта
-                num = randrange(1,150)
-                name = f'apple{num}'
+        self.startbutton = pygame.draw.rect(self.mn, 'grey', (round(self.size[0]//2-200), round(self.size[1]//2), 400, 100), 10, 30)
+        self.exitbutton = pygame.draw.rect(self.mn, 'grey', (round(self.size[0]//2-200), round(self.size[1]//2+200), 400, 100), 10, 30)
 
-                for i in range(len(self.mx)):
-                    if self.variables[self.mx[i][1]].rect.x > f1r - 100 and self.variables[self.mx[i][1]].rect.x < f1r + 100:
-                        f2r = self.size[1] + 250
-
-                if name not in self.variables:
-                    #создаю спрайт и задаю ему все параметры
-                    self.variables[name] = pygame.sprite.Sprite()
-                    self.variables[name].image = Food_m.apple
-                    self.variables[name].rect = self.variables[name].image.get_rect()
-                    self.variables[name].mask = pygame.mask.from_surface(self.variables[name].image)
-                    self.variables[name].name = name
-                    self.variables[name].rect.x = f1r
-                    self.variables[name].rect.y = f2r
-                    self.mx.append(['a',name])
-                    self.fd.add(self.variables[name])
-            #тут тоже самое, что и с типом 1
-            elif type == 2:
-                f1r = randrange(15,self.size[0]-80)
-                f2r = randrange(-200,-100)
-                num1 = randrange(1,150)
-                name = f'pear{num1}'
-
-
-                for i in range(len(self.mx)):
-                    if self.variables[self.mx[i][1]].rect.x > f1r - 100 and self.variables[self.mx[i][1]].rect.x < f1r + 100:
-                        f2r = self.size[1] + 250
-
-                if name not in self.variables:
-                    self.variables[name] = pygame.sprite.Sprite()
-                    self.variables[name].image = Food_m.pear
-                    self.variables[name].rect = self.variables[name].image.get_rect()
-                    self.variables[name].mask = pygame.mask.from_surface(self.variables[name].image)
-                    self.variables[name].name = name
-                    self.variables[name].rect.x = f1r
-                    self.variables[name].rect.y = f2r
-                    self.mx.append(['p',name])
-                    self.fd.add(self.variables[name])
-    def spawning(self):
-        for n in range(len(self.mx)):
-            try:
-                #если параметр а-apple то создаем яблоко
-                if self.mx[n][0] == 'a':
-                    #смотрю какое имя у этого спрайта
-                    name = self.mx[n][1]
-                    #работа с координатами спрайта
-                    self.variables[name].rect.y += 5
-                    #когда спрайт улетит вниз, то удалится
-                    if self.variables[name].rect.y > self.size[1] + 200:
-                        self.variables[name].kill()
-                        del self.variables[name]
-                        del self.mx[n]
-                    self.fd.draw(self.screen)
-                #тоже самое что и сверху
-                if self.mx[n][0] == 'p':
-                    name = self.mx[n][1]
-                    self.variables[name].rect.y += 5
-                    if self.variables[name].rect.y > self.size[1] + 200:
-                        self.variables[name].kill()
-                        del self.variables[name]
-                        del self.mx[n]
-                    self.fd.draw(self.screen)
-            except IndexError:
-                pass
-            except KeyError:
-                pass
-#------------------------------------------------
-#------------------------------------------------
-#Основной цикл
-def menu():
-    global main_screen, exitbutton, startbutton
-    pygame.init()
-    running = True
-    
-    main_screen = Screen()
-    main_screen.screen_blit(set_menu())
-
-    fruit = Food_m(main_screen.screen,main_screen.size)
-
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-                if event.key == pygame.K_F1:
-                    pygame.display.toggle_fullscreen()
-                if event.key == pygame.K_F2:
-                    pygame.display.iconify()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if exitbutton.collidepoint(event.pos) == True:
-                    running = False
-                if startbutton.collidepoint(event.pos) == True:
-                    running = False
-
-        main_screen.screen.fill('light blue')
-        buttons()
-        fruit.new_object()
-        fruit.spawning()
-        logo()
+        self.mn.blit(self.starttext, (round(self.size[0]//2-124), round(self.size[1]//2+15)))
+        self.mn.blit(self.exittext, (round(self.size[0]//2-124), round(self.size[1]//2+215)))
+    def main(self):
+        self.screen.blit(self.mn,(0,0))
+        self.mn.fill('light blue')
+        self.buttons()
+        self.logo_sp()
         pygame.display.flip()
-menu()
